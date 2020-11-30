@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using hwFinanceApp.Models;
 
 namespace hwFinanceApp
 {
@@ -32,6 +27,8 @@ namespace hwFinanceApp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "hwFinanceApp", Version = "v1" });
             });
+            services.AddDbContext<FinanceContext>(opt => opt.UseInMemoryDatabase("TransactionList"));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
