@@ -77,6 +77,7 @@ namespace hwFinanceApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
+            transaction.TransactionDate = DateTime.Now;
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
 
