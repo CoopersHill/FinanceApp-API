@@ -12,5 +12,6 @@ namespace hwFinanceApp.Models
         {         
         }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
     }
 }

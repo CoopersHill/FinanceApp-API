@@ -10,8 +10,9 @@ namespace hwFinanceApp.Models
         public long Id { get; set; }
         public string ItemName { get; set; }
         public double ItemCost { get; set; }
-        public bool RecStatus { get; set; }
+        public bool RecStatus { get; set; }        
         public DateTime TransactionDate { get; set; }
         public int OwnerAccountId { get; set; }
+
     }
 }
