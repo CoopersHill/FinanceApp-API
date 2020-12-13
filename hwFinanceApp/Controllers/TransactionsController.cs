@@ -87,10 +87,10 @@ namespace hwFinanceApp.Controllers
             transaction.TransactionDate = DateTime.Now;
             _context.Transactions.Add(transaction);
 
-            var bankAccount = await _context.BankAccounts.FindAsync(transaction.OwnerAccountId); //find the account this belongs to
+            var bankAccount = await _context.BankAccounts.FindAsync(transaction.BankAccountId); //find the account this belongs to
             if (bankAccount != null)
             { 
-            bankAccount.Transactions = _context.Transactions.Where(g => g.OwnerAccountId == bankAccount.Id).ToList();
+            bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == bankAccount.Id).ToList();
             bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.ItemCost).Sum();
             }
 

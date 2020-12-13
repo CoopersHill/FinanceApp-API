@@ -32,7 +32,7 @@ namespace hwFinanceApp.Controllers
         public async Task<ActionResult<BankAccount>> GetBankAccount(int id)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
-            bankAccount.Transactions = _context.Transactions.Where(g => g.OwnerAccountId == id).ToList();
+            bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == id).ToList();
             bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.ItemCost).Sum();
 
             if (bankAccount == null)
