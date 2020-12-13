@@ -11,6 +11,7 @@ namespace hwFinanceApp
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; //name of default policy
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,13 +22,23 @@ namespace hwFinanceApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "hwFinanceApp", Version = "v1" });
             });
             services.AddDbContext<FinanceContext>(opt => opt.UseInMemoryDatabase("TransactionList"));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+                                                                {
+                                                                    builder.AllowAnyOrigin()
+                                                                    .AllowAnyMethod()
+                                                                    .AllowAnyHeader();
+                                                                    //.AllowCredentials(); can't use credentials with allowany origin
+                                                                });
+            });
             
         }
 
@@ -44,6 +55,8 @@ namespace hwFinanceApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
             app.UseAuthorization();
 
