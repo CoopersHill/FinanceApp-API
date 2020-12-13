@@ -84,29 +84,30 @@ namespace hwFinanceApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
+            Console.Write(_context.Transactions.Count());
             transaction.TransactionDate = DateTime.Now;
             _context.Transactions.Add(transaction);
+            Console.WriteLine(_context.Transactions.Count());
+            //var bankAccount = await _context.BankAccounts.FindAsync(transaction.BankAccountId); //find the account this belongs to
+            //if (bankAccount != null)
+            //{
+            //    bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == bankAccount.Id).ToList();
+            //    bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.ItemCost).Sum();
+            //_context.Entry(bankAccount).State = EntityState.Modified;
+            //}
 
-            var bankAccount = await _context.BankAccounts.FindAsync(transaction.BankAccountId); //find the account this belongs to
-            if (bankAccount != null)
-            { 
-            bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == bankAccount.Id).ToList();
-            bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.ItemCost).Sum();
-            }
-
-            //_context.Entry(transaction).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {                   
-                                    throw;                
-            }
+            await _context.SaveChangesAsync();
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{                   
+            //                        throw;                
+            //}
            
 
-            //return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
+           // return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
             return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, transaction);
         }
 
