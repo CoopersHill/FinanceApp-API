@@ -24,7 +24,12 @@ namespace hwFinanceApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankAccounts()
         {
-            return await _context.BankAccounts.ToListAsync();
+            var bankAccounts  = await _context.BankAccounts.ToListAsync();
+            foreach (var account in bankAccounts) {
+                account.Transactions = await  _context.Transactions.Where(g => g.BankAccountId == account.Id).ToListAsync();
+            }
+
+            return bankAccounts;
         }
 
         // GET: api/BankAccounts/5
