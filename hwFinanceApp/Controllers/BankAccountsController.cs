@@ -38,7 +38,7 @@ namespace hwFinanceApp.Controllers
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
             bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == id).ToList();
-            bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.ItemCost).Sum();
+            bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.Amount).Sum();
 
             if (bankAccount == null)
             {

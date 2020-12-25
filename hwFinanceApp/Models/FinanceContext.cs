@@ -11,8 +11,12 @@ namespace hwFinanceApp.Models
         public FinanceContext(DbContextOptions<FinanceContext> options) : base(options) 
         {         
         }
-        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
+        public DbSet<BudgetItem> BudgetItems { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<HouseHold> HouseHolds { get; set; }
+        
     }
 }
