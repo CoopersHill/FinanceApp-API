@@ -21,12 +21,12 @@ namespace hwFinanceApp.Controllers
         }
 
         // GET: api/BankAccounts
-        [HttpGet]
+        [HttpGet]nts
         public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankAccounts()
         {
             var bankAccounts  = await _context.BankAccounts.ToListAsync();
             foreach (var account in bankAccounts) {
-                account.Transactions = await  _context.Transactions.Where(g => g.BankAccountId == account.Id).ToListAsync();
+                account.transactions = await  _context.Transactions.Where(g => g.BankAccountId == account.Id).ToListAsync();
             }
 
             return bankAccounts;
@@ -37,8 +37,8 @@ namespace hwFinanceApp.Controllers
         public async Task<ActionResult<BankAccount>> GetBankAccount(int id)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
-            bankAccount.Transactions = _context.Transactions.Where(g => g.BankAccountId == id).ToList();
-            bankAccount.AccountBalance = bankAccount.Transactions.Select(h => h.Amount).Sum();
+            bankAccount.transactions = _context.Transactions.Where(g => g.BankAccountId == id).ToList();
+            bankAccount.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
 
             if (bankAccount == null)
             {
