@@ -44,9 +44,9 @@ namespace hwFinanceApp.Controllers
         // PUT: api/HouseHolds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHouseHold(int id, HouseHold houseHold)
+        public async Task<IActionResult> PutHouseHold(int ID, HouseHold houseHold)
         {
-            if (id != houseHold.Id)
+            if (ID != houseHold.ID)
             {
                 return BadRequest();
             }
@@ -59,7 +59,7 @@ namespace hwFinanceApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HouseHoldExists(id))
+                if (!HouseHoldExists(ID))
                 {
                     return NotFound();
                 }
@@ -80,14 +80,14 @@ namespace hwFinanceApp.Controllers
             _context.HouseHolds.Add(houseHold);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHouseHold", new { id = houseHold.Id }, houseHold);
+            return CreatedAtAction("GetHouseHold", new { ID = houseHold.ID }, houseHold);
         }
 
         // DELETE: api/HouseHolds/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHouseHold(int id)
+        public async Task<IActionResult> DeleteHouseHold(int ID)
         {
-            var houseHold = await _context.HouseHolds.FindAsync(id);
+            var houseHold = await _context.HouseHolds.FindAsync(ID);
             if (houseHold == null)
             {
                 return NotFound();
@@ -99,9 +99,9 @@ namespace hwFinanceApp.Controllers
             return NoContent();
         }
 
-        private bool HouseHoldExists(int id)
+        private bool HouseHoldExists(int ID)
         {
-            return _context.HouseHolds.Any(e => e.Id == id);
+            return _context.HouseHolds.Any(e => e.ID == ID);
         }
     }
 }

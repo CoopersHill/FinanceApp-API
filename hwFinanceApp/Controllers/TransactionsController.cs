@@ -36,9 +36,9 @@ namespace hwFinanceApp.Controllers
 
         // GET: api/Transactions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>> GetTransaction(long id)
+        public async Task<ActionResult<Transaction>> GetTransaction(long ID)
         {
-            var transaction = await _context.Transactions.FindAsync(id);
+            var transaction = await _context.Transactions.FindAsync(ID);
 
             if (transaction == null)
             {
@@ -50,10 +50,10 @@ namespace hwFinanceApp.Controllers
 
         // PUT: api/Transactions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{ID}")]
         public async Task<IActionResult> PutTransaction(long id, Transaction transaction)
         {
-            if (id != transaction.Id)
+            if (id != transaction.ID)
             {
                 return BadRequest();
             }
@@ -108,7 +108,7 @@ namespace hwFinanceApp.Controllers
            
 
            // return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
-            return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, transaction);
+            return CreatedAtAction(nameof(GetTransaction), new { id = transaction.ID }, transaction);
         }
 
         // DELETE: api/Transactions/5
@@ -129,7 +129,7 @@ namespace hwFinanceApp.Controllers
 
         private bool TransactionExists(long id)
         {
-            return _context.Transactions.Any(e => e.Id == id);
+            return _context.Transactions.Any(e => e.ID == id);
         }
     }
 }

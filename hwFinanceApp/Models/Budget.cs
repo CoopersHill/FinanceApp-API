@@ -7,7 +7,7 @@ namespace hwFinanceApp.Models
 {
     public class Budget
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set;  }
         public int HouseHoldId { get; set; }
         public virtual HouseHold Household { get; set; }

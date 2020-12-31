@@ -7,12 +7,12 @@ namespace hwFinanceApp.Models
 {
     public class Category
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         
         public IEnumerable<Transaction> Transactions { get; set; }
-        public int HouseholdId { get; set; }
-        public HouseHold Household { get; set; }
+        public int HouseholdID { get; set; }
+      
          
     }
 }

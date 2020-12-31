@@ -21,23 +21,23 @@ namespace hwFinanceApp.Controllers
         }
 
         // GET: api/BankAccounts
-        [HttpGet]nts
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankAccounts()
         {
             var bankAccounts  = await _context.BankAccounts.ToListAsync();
             foreach (var account in bankAccounts) {
-                account.transactions = await  _context.Transactions.Where(g => g.BankAccountId == account.Id).ToListAsync();
+                account.transactions = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).ToListAsync();
             }
 
             return bankAccounts;
         }
 
         // GET: api/BankAccounts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BankAccount>> GetBankAccount(int id)
+        [HttpGet("{ID}")]
+        public async Task<ActionResult<BankAccount>> GetBankAccount(int ID)
         {
-            var bankAccount = await _context.BankAccounts.FindAsync(id);
-            bankAccount.transactions = _context.Transactions.Where(g => g.BankAccountId == id).ToList();
+            var bankAccount = await _context.BankAccounts.FindAsync(ID);
+            bankAccount.transactions = _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
             bankAccount.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
 
             if (bankAccount == null)
@@ -51,10 +51,10 @@ namespace hwFinanceApp.Controllers
 
         // PUT: api/BankAccounts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBankAccount(int id, BankAccount bankAccount)
+        [HttpPut("{ID}")]
+        public async Task<IActionResult> PutBankAccount(int ID, BankAccount bankAccount)
         {
-            if (id != bankAccount.Id)
+            if (ID != bankAccount.ID)
             {
                 return BadRequest();
             }
@@ -67,7 +67,7 @@ namespace hwFinanceApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BankAccountExists(id))
+                if (!BankAccountExists(ID))
                 {
                     return NotFound();
                 }
@@ -88,14 +88,14 @@ namespace hwFinanceApp.Controllers
             _context.BankAccounts.Add(bankAccount);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBankAccount", new { id = bankAccount.Id }, bankAccount);
+            return CreatedAtAction("GetBankAccount", new { ID = bankAccount.ID }, bankAccount);
         }
 
         // DELETE: api/BankAccounts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBankAccount(int id)
+        [HttpDelete("{ID}")]
+        public async Task<IActionResult> DeleteBankAccount(int ID)
         {
-            var bankAccount = await _context.BankAccounts.FindAsync(id);
+            var bankAccount = await _context.BankAccounts.FindAsync(ID);
             if (bankAccount == null)
             {
                 return NotFound();
@@ -107,9 +107,9 @@ namespace hwFinanceApp.Controllers
             return NoContent();
         }
 
-        private bool BankAccountExists(int id)
+        private bool BankAccountExists(int ID)
         {
-            return _context.BankAccounts.Any(e => e.Id == id);
+            return _context.BankAccounts.Any(e => e.ID == ID);
         }
     }
 }

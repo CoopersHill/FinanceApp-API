@@ -10,7 +10,7 @@ namespace hwFinanceApp.Models
         public BankAccount() {
             this.transactions = new HashSet<Transaction>();            
         }
-        public int Id { get; set; } //primary key of Bank account
+        public int ID { get; set; } //primary key of Bank account
         public string AccountDescription { get; set; }
         public int AccountType { get; set; }
         public int AccountOwnerId { get; set; } //User who owns the account
