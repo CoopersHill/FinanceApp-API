@@ -47,6 +47,10 @@ namespace hwFinanceApp.Data
                  new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash", CategoryID = 1, EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
                  new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash", CategoryID = 1, EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
             };
+            foreach (var tran in transactions) {
+                context.Transactions.Add(tran);
+            }
+            context.SaveChanges();
             var budgets = new Budget[] {
                 new Budget{ Name = "Food Budget", HouseHoldId = 1 },
                 new Budget{ Name = "Entertainment Budget", HouseHoldId = 1 },
