@@ -17,7 +17,7 @@ namespace hwFinanceApp
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(host);
+             CreateDbIfNotExists(host);
             host.Run();            
         }
         private static void CreateDbIfNotExists(IHost host) {
@@ -32,7 +32,7 @@ namespace hwFinanceApp
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB");                        
+                    logger.LogError(ex, "An error occurred creating the DB");  Console.WriteLine(ex.InnerException);
                 }
             }
         }
