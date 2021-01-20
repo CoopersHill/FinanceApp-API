@@ -10,7 +10,7 @@ namespace hwFinanceApp.Models
         public int ID { get; set; }
         public string Name { get; set; }
         
-        public IEnumerable<Transaction> Transactions { get; set; }
+        //public IEnumerable<Transaction> Transactions { get; set; }
         public int HouseholdID { get; set; }
       
          

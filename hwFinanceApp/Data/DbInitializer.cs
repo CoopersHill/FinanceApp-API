@@ -60,13 +60,13 @@ namespace hwFinanceApp.Data
             result = context.SaveChanges();
 
             var transactions = new Transaction[] {
-                new Transaction{ BankAccountID = 1, Description = "Expense a", TransactionDate = DateTime.Parse("2020-07-06"), Amount = 99, Type = "Debit",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 }
-                //,
-                // new Transaction{ BankAccountID = 1, Description = "Expense B", TransactionDate = DateTime.Parse("2020-03-03"), Amount = 88, Type = "Credit",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
-                // new Transaction{ BankAccountID = 2, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
-                // new Transaction{ BankAccountID = 2, Description = "Expense F", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
-                // new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
-                // new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 }
+                new Transaction{ BankAccountID = 1, Description = "Expense a", TransactionDate = DateTime.Parse("2020-07-06"), Amount = 99, Type = "Debit",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1, CategoryID = 1 }
+                ,
+                 new Transaction{ BankAccountID = 1, Description = "Expense B", TransactionDate = DateTime.Parse("2020-03-03"), Amount = 88, Type = "Credit",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
+                 new Transaction{ BankAccountID = 2, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
+                 new Transaction{ BankAccountID = 2, Description = "Expense F", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
+                 new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 },
+                 new Transaction{ BankAccountID = 3, Description = "Expense C", TransactionDate = DateTime.Parse("2020-07-31"), Amount = 50, Type = "Cash",   EnteredByID = "Hanif Warren", RecStatus = false, ReconciledAmount = 0, EnteredBy_ID = 1 }
             };
                 var BankAccountIDs = context.BankAccounts.Select(b => b.ID).ToArray();
             foreach (var tran in transactions) {
