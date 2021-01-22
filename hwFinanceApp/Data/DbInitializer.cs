@@ -21,9 +21,9 @@ namespace hwFinanceApp.Data
             }
 
             var households = new HouseHold[] {
-            new HouseHold{ HouseholdName = "Household 1", HeadOfHouseholdID = 1, Categories = null, Budgets = null},
-            new HouseHold{ HouseholdName = "Household 2", HeadOfHouseholdID = 2, Categories = null, Budgets = null},
-            new HouseHold{ HouseholdName = "Household 3", HeadOfHouseholdID = 3, Categories = null, Budgets = null},
+            new HouseHold{ HouseholdName = "Warren Family", HeadOfHouseholdID = 1, Categories = null, Budgets = null},
+            new HouseHold{ HouseholdName = "Waller family", HeadOfHouseholdID = 2, Categories = null, Budgets = null},
+            new HouseHold{ HouseholdName = "HAW Consulting", HeadOfHouseholdID = 3, Categories = null, Budgets = null},
             };
             foreach (var h in households) {
                 context.HouseHolds.Add(h);
@@ -54,7 +54,8 @@ namespace hwFinanceApp.Data
                 new BankAccount{ AccountDescription = "Basic Savings Account", AccountType = 2, AccountOwnerId = 1, AccountBalance = 2000  },
                 new BankAccount{ AccountDescription = "Basic Retirement Account", AccountType = 2, AccountOwnerId = 1, AccountBalance = 3000  },
             };
-            foreach (var b in bankAccounts) {                
+            foreach (var b in bankAccounts) {    
+                
                 context.BankAccounts.Add(b);
             }
             result = context.SaveChanges();
