@@ -78,14 +78,16 @@ namespace hwFinanceApp.Data
             }
             result = context.SaveChanges();
             var budgets = new Budget[] {
-                new Budget{ Name = "Food Budget", HouseHoldId = 1 },
-                new Budget{ Name = "Entertainment Budget", HouseHoldId = 1 },
-                new Budget{ Name = "Housing Budget", HouseHoldId = 2 },
-                new Budget{ Name = "Housing Budget", HouseHoldId = 2 },
-                new Budget{ Name = "Housing Budget", HouseHoldId = 3 },
-                new Budget{ Name = "Entertainment Budget", HouseHoldId = 3 },
+                new Budget{ Name = "Food Budget"  },
+                new Budget{ Name = "Entertainment Budget"},
+                new Budget{ Name = "Housing Budget" },
+                new Budget{ Name = "Housing Budget" },
+                new Budget{ Name = "Housing Budget" },
+                new Budget{ Name = "Entertainment Budget" },
             };
+            
             foreach (var b in budgets) {
+                b.HouseHoldId = houseHoldIDs[random.Next(houseHoldIDs.Length)];
                 context.Budgets.Add(b);
             }
             result = context.SaveChanges();
