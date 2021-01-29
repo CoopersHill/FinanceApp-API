@@ -92,19 +92,20 @@ namespace hwFinanceApp.Data
             }
             result = context.SaveChanges();
 
-            //var budgetItems = new BudgetItem[] {
-            //new BudgetItem{ Amount = 100, CategoriesId = 1 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 2 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 3 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 1 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 2 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 3 },
-            //new BudgetItem{ Amount = 100, CategoriesId = 1 }
-            //};
-            //foreach (var b in budgetItems) {
-            //    context.BudgetItems.Add(b);
-            //}
-            //result = context.SaveChanges();
+            var budgetItems = new BudgetItem[] {
+            new BudgetItem{ Amount = 100, CategoriesId = 1 },
+            new BudgetItem{ Amount = 100, CategoriesId = 2 },
+            new BudgetItem{ Amount = 100, CategoriesId = 3 },
+            new BudgetItem{ Amount = 100, CategoriesId = 1 },
+            new BudgetItem{ Amount = 100, CategoriesId = 2 },
+            new BudgetItem{ Amount = 100, CategoriesId = 3 },
+            new BudgetItem{ Amount = 100, CategoriesId = 1 }
+            };
+            foreach (var b in budgetItems)
+            {
+                context.BudgetItems.Add(b);
+            }
+            result = context.SaveChanges();
         }
     }
 }
