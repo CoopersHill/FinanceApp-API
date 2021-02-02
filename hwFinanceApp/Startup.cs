@@ -12,6 +12,7 @@ namespace hwFinanceApp
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; //name of default policy
+        private string _FinanceConnectionString = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,7 +23,7 @@ namespace hwFinanceApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            _FinanceConnectionString = Configuration["ConnectionStrings: HWFinanceConnectionStringProd"];
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
