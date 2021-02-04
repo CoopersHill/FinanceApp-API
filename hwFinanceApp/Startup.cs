@@ -30,8 +30,10 @@ namespace hwFinanceApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "hwFinanceApp", Version = "v1" });
             });
            // services.AddDbContext<FinanceContext>(opt => opt.UseInMemoryDatabase("TransactionList")); --only used when no db around
-            services.AddDbContext<FinanceContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<FinanceContext>(options =>
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FinanceContext>(options => options.UseSqlServer(_FinanceConnectionString));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
             
             services.AddCors(options =>
