@@ -11,7 +11,7 @@ namespace hwFinanceApp.Data
     {
         public static void Initialize(FinanceContext context)
         {
-            context.Database.EnsureDeleted();
+           // context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             //look for any accounts
