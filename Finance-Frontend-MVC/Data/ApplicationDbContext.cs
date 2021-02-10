@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Finance_Frontend_MVC.Models;
 
 namespace Finance_Frontend_MVC.Data
 {
@@ -12,5 +13,6 @@ namespace Finance_Frontend_MVC.Data
             : base(options)
         {
         }
+        public DbSet<Finance_Frontend_MVC.Models.BankAccount> BankAccount { get; set; }
     }
 }
