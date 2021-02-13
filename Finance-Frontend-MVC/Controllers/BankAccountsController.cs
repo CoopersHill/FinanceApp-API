@@ -15,6 +15,8 @@ namespace Finance_Frontend_MVC.Controllers
     public class BankAccountsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly string urlStub = "https://localhost:44325";
+        private readonly string bankAccountsEndPoint = "/api/BankAccounts";
 
         public BankAccountsController(ApplicationDbContext context)
         {
@@ -25,9 +27,11 @@ namespace Finance_Frontend_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             List<BankAccount> BankAccountList = new List<BankAccount>();
+
+            string requestURL = urlStub + bankAccountsEndPoint;
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44325/api/BankAccounts"))
+                using (var response = await httpClient.GetAsync(requestURL))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     BankAccountList = JsonConvert.DeserializeObject<List<BankAccount>>(apiResponse);
