@@ -58,6 +58,8 @@ namespace hwFinanceApp.Controllers
             {
                 return BadRequest();
             }
+            var transactions =  _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
+            bankAccount.transactions = transactions;
 
             _context.Entry(bankAccount).State = EntityState.Modified;
 
