@@ -89,8 +89,18 @@ namespace Finance_Frontend_MVC.Controllers
             {
                 return NotFound();
             }
+            var bankAccount = new BankAccount();
 
-            var bankAccount = await _context.BankAccount.FindAsync(id);
+            string requestURL = urlStub + bankAccountsEndPoint + "\\" + id;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(requestURL))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    bankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
+                }
+            }
+
             if (bankAccount == null)
             {
                 return NotFound();
@@ -109,28 +119,40 @@ namespace Finance_Frontend_MVC.Controllers
             {
                 return NotFound();
             }
+            BankAccount updatedBankAccount = new BankAccount();
 
-            if (ModelState.IsValid)
+            string requestURL = urlStub + bankAccountsEndPoint + "/" + id;
+            using (var httpClient = new HttpClient())
             {
-                try
+               StringContent myBody = new StringContent(JsonConvert.SerializeObject(bankAccount));
+                using (var response = await httpClient.PostAsync(requestURL, myBody))
                 {
-                    _context.Update(bankAccount);
-                    await _context.SaveChangesAsync();
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    updatedBankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BankAccountExists(bankAccount.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(bankAccount);
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _context.Update(bankAccount);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!BankAccountExists(bankAccount.ID))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
+            return View(updatedBankAccount != null ? updatedBankAccount : bankAccount);
         }
 
         // GET: BankAccounts/Delete/5
