@@ -18,26 +18,34 @@ namespace Finance_Frontend_MVC.Controllers
         private readonly string urlStub = "https://localhost:44325";
         private readonly string bankAccountsEndPoint = "/api/BankAccounts";
 
-        public BankAccountsController(ApplicationDbContext context)
-        {
-            _context = context;
+        private IFinanceRepository _financeRepository;
+        //public BankAccountsController(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
+
+        public BankAccountsController(IFinanceRepository financeRepository) {
+            _financeRepository = financeRepository;
         }
 
         // GET: BankAccounts
         public async Task<IActionResult> Index()
         {
-            List<BankAccount> BankAccountList = new List<BankAccount>();
+            List<BankAccount> bankAccountList = new List<BankAccount>();
 
-            string requestURL = urlStub + bankAccountsEndPoint;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(requestURL))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    BankAccountList = JsonConvert.DeserializeObject<List<BankAccount>>(apiResponse);
-              }
-            }
-            return View(BankAccountList);
+            //string requestURL = urlStub + bankAccountsEndPoint;
+            //using (var httpClient = new HttpClient())
+            //{
+            //    using (var response = await httpClient.GetAsync(requestURL))
+            //    {
+            //        string apiResponse = await response.Content.ReadAsStringAsync();
+            //        BankAccountList = JsonConvert.DeserializeObject<List<BankAccount>>(apiResponse);
+            //  }
+            //}
+
+            bankAccountList = await _financeRepository.GetBankAccountsAsync();
+
+            return View(bankAccountList);
 
                 //return View(await _context.BankAccount.ToListAsync());
         }
