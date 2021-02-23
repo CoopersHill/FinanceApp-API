@@ -7,6 +7,6 @@ namespace Finance_Frontend_MVC.Data
     public interface IFinanceRepository
     {
         Task<List<BankAccount>> GetBankAccountsAsync();
-        Task<BankAccount> UpdateBankAccount(int id, BankAccount bankAccount);
+        Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount);
     }
 }

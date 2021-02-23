@@ -19,10 +19,7 @@ namespace Finance_Frontend_MVC.Controllers
         private readonly string bankAccountsEndPoint = "/api/BankAccounts";
 
         private IFinanceRepository _financeRepository;
-        //public BankAccountsController(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
+      
 
         public BankAccountsController(IFinanceRepository financeRepository) {
             _financeRepository = financeRepository;

@@ -14,7 +14,8 @@ namespace Finance_Frontend_MVC.Data
         {
         }
         private readonly string urlStub = "https://localhost:44325";
-        private readonly string bankAccountsEndPoint = "/api/BankAccounts";
+        private readonly string bankAccountsEndPoint = "/api/BankAccounts";        
+
         public async Task<List<BankAccount>> GetBankAccountsAsync()
         {
             List<BankAccount> bankAccountsList = new List<BankAccount>();
@@ -30,7 +31,20 @@ namespace Finance_Frontend_MVC.Data
             return bankAccountsList;
         }
 
-        public async Task<BankAccount> UpdateBankAccount(int id, BankAccount bankAccount)
+        public async Task<BankAccount> AddBankAccountAsync(BankAccount bankAccount) {
+            string requestUrl = urlStub + bankAccountsEndPoint + "/" + bankAccount;
+             using (var httpClient = new HttpClient()) {
+                StringContent requestBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
+
+                using (var response = await httpClient.PostAsync(requestUrl, requestBody)) {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    bankAccount =  JsonConvert.DeserializeObject<BankAccount>(apiResponse);
+
+                }
+            }
+            return bankAccount;
+        }
+        public async Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount)
         {
             BankAccount updatedBankAccount = new BankAccount();
             string requestUrl = urlStub + bankAccount + "/" + id;
