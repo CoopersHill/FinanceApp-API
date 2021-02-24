@@ -14,7 +14,7 @@ namespace Finance_Frontend_MVC.Data
         {
         }
         private readonly string urlStub = "https://localhost:44325";
-        private readonly string bankAccountsEndPoint = "/api/BankAccounts";        
+        private readonly string bankAccountsEndPoint = "/api/BankAccountsAPI";        
 
         public async Task<List<BankAccount>> GetBankAccountsAsync()
         {
@@ -60,6 +60,21 @@ namespace Finance_Frontend_MVC.Data
 
 
             return updatedBankAccount;
+        }
+        public async Task<bool> DeleteBankAccountAsync(int id) {
+
+            string requestUrl = urlStub + bankAccountsEndPoint + id;
+            using (var httpClient = new HttpClient()) {
+
+                using (var response = await httpClient.DeleteAsync(requestUrl)) {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(apiResponse);
+                }
+            }
+            
+            
+            return true;
+
         }
     }
 

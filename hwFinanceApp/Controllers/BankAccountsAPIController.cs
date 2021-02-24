@@ -11,11 +11,11 @@ namespace hwFinanceApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BankAccountsController : ControllerBase
+    public class BankAccountsAPIController : ControllerBase
     {
         private readonly FinanceContext _context;
 
-        public BankAccountsController(FinanceContext context)
+        public BankAccountsAPIController(FinanceContext context)
         {
             _context = context;
         }

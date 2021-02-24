@@ -75,13 +75,13 @@ namespace Finance_Frontend_MVC.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,AccountDescription,AccountType,AccountOwnerId,AccountBalance")] BankAccount bankAccount)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(bankAccount);
-                await _context.SaveChangesAsync();
+                var newAccount = await _financeRepository.AddBankAccountAsync(bankAccount);
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(bankAccount);
@@ -187,9 +187,15 @@ namespace Finance_Frontend_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bankAccount = await _context.BankAccount.FindAsync(id);
-            _context.BankAccount.Remove(bankAccount);
-            await _context.SaveChangesAsync();
+
+            bool result = await _financeRepository.DeleteBankAccountAsync(id);
+
+            //var bankAccount = await _context.BankAccount.FindAsync(id);
+            //_context.BankAccount.Remove(bankAccount);
+            //await _context.SaveChangesAsync();
+            if (result) {
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction(nameof(Index));
         }
 

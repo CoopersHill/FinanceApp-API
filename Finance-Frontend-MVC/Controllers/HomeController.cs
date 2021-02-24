@@ -20,7 +20,8 @@ namespace Finance_Frontend_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "BankAccounts");
+         //   return View();
         }
 
         public IActionResult Privacy()
