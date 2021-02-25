@@ -32,7 +32,7 @@ namespace Finance_Frontend_MVC.Data
         }
 
         public async Task<BankAccount> AddBankAccountAsync(BankAccount bankAccount) {
-            string requestUrl = urlStub + bankAccountsEndPoint + "/" + bankAccount;
+            string requestUrl = urlStub + bankAccountsEndPoint;
              using (var httpClient = new HttpClient()) {
                 StringContent requestBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
 

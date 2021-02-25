@@ -75,13 +75,13 @@ namespace Finance_Frontend_MVC.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,AccountDescription,AccountType,AccountOwnerId,AccountBalance")] BankAccount bankAccount)
         {
             if (ModelState.IsValid)
             {
                 var newAccount = await _financeRepository.AddBankAccountAsync(bankAccount);
-                
+                if (newAccount != null) 
                 return RedirectToAction(nameof(Index));
             }
             return View(bankAccount);
