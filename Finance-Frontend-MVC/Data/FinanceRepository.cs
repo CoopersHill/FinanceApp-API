@@ -16,20 +16,39 @@ namespace Finance_Frontend_MVC.Data
         private readonly string urlStub = "https://localhost:44325";
         private readonly string bankAccountsEndPoint = "/api/BankAccountsAPI";        
 
-        public async Task<List<BankAccount>> GetBankAccountsAsync()
-        {
-            List<BankAccount> bankAccountsList = new List<BankAccount>();
-            string requestUrl = urlStub + bankAccountsEndPoint;
+        public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
+        {            
+            string requestUrl = urlStub + bankAccountsEndPoint;            
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(requestUrl))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    bankAccountsList = JsonConvert.DeserializeObject<List<BankAccount>>(apiResponse);
+                    var bankAccountsList = JsonConvert.DeserializeObject<IEnumerable<BankAccount>>(apiResponse);
+                   return bankAccountsList.ToList();
                 }
             }
-            return bankAccountsList;
         }
+
+        public async Task<BankAccount> GetBankAccountsAsync(int? id)
+        {
+            string requestUrl = urlStub + bankAccountsEndPoint;
+            if (id != null)
+            {
+                requestUrl += "/" + id; //get a single account
+            }
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(requestUrl))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var bankAccountsList = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
+                    return bankAccountsList;
+                }
+            }
+        }
+
+
 
         public async Task<BankAccount> AddBankAccountAsync(BankAccount bankAccount) {
             string requestUrl = urlStub + bankAccountsEndPoint;

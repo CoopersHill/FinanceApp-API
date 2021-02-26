@@ -28,7 +28,7 @@ namespace Finance_Frontend_MVC.Controllers
         // GET: BankAccounts
         public async Task<IActionResult> Index()
         {
-            List<BankAccount> bankAccountList = new List<BankAccount>();
+            //List<BankAccount> bankAccountList = new List<BankAccount>();
 
             //string requestURL = urlStub + bankAccountsEndPoint;
             //using (var httpClient = new HttpClient())
@@ -40,7 +40,7 @@ namespace Finance_Frontend_MVC.Controllers
             //  }
             //}
 
-            bankAccountList = await _financeRepository.GetBankAccountsAsync();
+            var bankAccountList = await _financeRepository.GetBankAccountsAsync();
 
             return View(bankAccountList);
 
@@ -94,17 +94,7 @@ namespace Finance_Frontend_MVC.Controllers
             {
                 return NotFound();
             }
-            var bankAccount = new BankAccount();
-
-            string requestURL = urlStub + bankAccountsEndPoint + "\\" + id;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(requestURL))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    bankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
-                }
-            }
+            var bankAccount = await _financeRepository.GetBankAccountsAsync(id);
 
             if (bankAccount == null)
             {

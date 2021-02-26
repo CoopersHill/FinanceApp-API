@@ -8,7 +8,9 @@ namespace Finance_Frontend_MVC.Data
     {
         Task<BankAccount> AddBankAccountAsync(BankAccount bankAccount);
         Task<bool> DeleteBankAccountAsync(int id);
-        Task<List<BankAccount>> GetBankAccountsAsync();        
+        
+        Task<IEnumerable<BankAccount>> GetBankAccountsAsync();
+        Task<BankAccount> GetBankAccountsAsync(int? id);
         Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount);
         
     }
