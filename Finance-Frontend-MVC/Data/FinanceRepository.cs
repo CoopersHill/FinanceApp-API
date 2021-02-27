@@ -66,7 +66,7 @@ namespace Finance_Frontend_MVC.Data
         public async Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount)
         {
             BankAccount updatedBankAccount = new BankAccount();
-            string requestUrl = urlStub + bankAccount + "/" + id;
+            string requestUrl = urlStub + bankAccountsEndPoint + "/" + id;
             using (var httpClient = new HttpClient())
             {
                 StringContent myBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");

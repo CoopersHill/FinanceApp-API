@@ -15,7 +15,7 @@ namespace hwFinanceApp.ViewModels
         }
 
         public BankAccount bankAccount { get; set; }
-        public List<Transaction> transactions { get; set; }
+        public IEnumerable<Transaction> transactions { get; set; }
     }
 
 

@@ -114,22 +114,14 @@ namespace Finance_Frontend_MVC.Controllers
             {
                 return NotFound();
             }
-            BankAccount updatedBankAccount = new BankAccount();
-
-
-            string requestURL = urlStub + bankAccountsEndPoint + "/" + id;
-
-             
-
-            using (var httpClient = new HttpClient())
-            {
-               StringContent myBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PutAsync(requestURL, myBody))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    updatedBankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
-                }
-            }
+            
+            var updatedBankAccount = await _financeRepository.UpdateBankAccountAsync(id, bankAccount);
+            
+            
+            //If we saved successfully, return to index, otherwise redisplay data
+            //todo add error handling    
+             return RedirectToAction(nameof(Index));
+       
 
             //if (ModelState.IsValid)
             //{
@@ -151,7 +143,7 @@ namespace Finance_Frontend_MVC.Controllers
             //    }
             //    return RedirectToAction(nameof(Index));
             //}
-            return View(updatedBankAccount != null ? updatedBankAccount : bankAccount);
+
         }
 
         // GET: BankAccounts/Delete/5
