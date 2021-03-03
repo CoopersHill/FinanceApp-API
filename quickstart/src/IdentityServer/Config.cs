@@ -26,14 +26,14 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "client";
+                    ClientId = "client",
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     
                     //Secret for authentication
                     ClientSecrets = 
                     {
-                        new Secret("secret".Sha25())
+                        new Secret("secret".Sha256())
                     },
 
                     //scopes that the client has access to

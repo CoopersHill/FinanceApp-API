@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hwFinanceApp", "hwFinanceApp\hwFinanceApp.csproj", "{32DB3587-F706-4322-B2E9-AFB9C2B500FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance-Frontend-MVC", "Finance-Frontend-MVC\Finance-Frontend-MVC.csproj", "{422525EB-7580-4BBC-8F12-1424FC15C2C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance-Frontend-MVC", "Finance-Frontend-MVC\Finance-Frontend-MVC.csproj", "{422525EB-7580-4BBC-8F12-1424FC15C2C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "quickstart\src\IdentityServer\IdentityServer.csproj", "{F3A02C23-BB9D-439B-9313-0A7EB2614909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{422525EB-7580-4BBC-8F12-1424FC15C2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{422525EB-7580-4BBC-8F12-1424FC15C2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{422525EB-7580-4BBC-8F12-1424FC15C2C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A02C23-BB9D-439B-9313-0A7EB2614909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A02C23-BB9D-439B-9313-0A7EB2614909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A02C23-BB9D-439B-9313-0A7EB2614909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A02C23-BB9D-439B-9313-0A7EB2614909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

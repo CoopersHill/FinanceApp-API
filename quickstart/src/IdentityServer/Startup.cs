@@ -23,17 +23,14 @@ namespace IdentityServer
             // uncomment, if you want to add an MVC-based UI
             //services.AddControllersWithViews();
 
-            var builder = services.AddIdentityServer(options =>
-            {
-                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
-                options.EmitStaticAudienceClaim = true;
-            })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
+            var builder = services.AddIdentityServer()
+                .AddDeveloperSigningCredential() //for dev only scenarios when you don't have a certificate                
+                //.AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients);
 
             // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+           // builder.AddDeveloperSigningCredential();
         }
 
         public void Configure(IApplicationBuilder app)
