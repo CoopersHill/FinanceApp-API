@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using hwFinanceApp.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace hwFinanceApp
 {
@@ -25,17 +26,28 @@ namespace hwFinanceApp
         {
             _FinanceConnectionString = Configuration["ConnectionStrings: HWFinanceConnectionStringProd"];
             services.AddControllers();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "hwFinanceApp", Version = "v1" });
             });
-           // services.AddDbContext<FinanceContext>(opt => opt.UseInMemoryDatabase("TransactionList")); --only used when no db around
+            // services.AddDbContext<FinanceContext>(opt => opt.UseInMemoryDatabase("TransactionList")); --only used when no db around
             //services.AddDbContext<FinanceContext>(options =>
-                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<FinanceContext>(options => options.UseSqlServer(_FinanceConnectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
@@ -64,6 +76,7 @@ namespace hwFinanceApp
 
             app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
