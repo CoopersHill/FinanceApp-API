@@ -14,10 +14,12 @@ namespace Finance_Frontend_MVC.Data
         {
         }
         private readonly string urlStub = "https://localhost:44325";
-        private readonly string bankAccountsEndPoint = "/api/BankAccountsAPI";        
+        private readonly string bankAccountsEndPoint = "/api/BankAccountsAPI";
 
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
         {            
+        var authenticationService = new AuthenticationService();
+        authenticationService.GetAPIToken();
             string requestUrl = urlStub + bankAccountsEndPoint;            
             using (var httpClient = new HttpClient())
             {

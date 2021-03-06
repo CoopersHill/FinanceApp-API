@@ -22,5 +22,6 @@ namespace Finance_Frontend_MVC
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        
     }
 }
