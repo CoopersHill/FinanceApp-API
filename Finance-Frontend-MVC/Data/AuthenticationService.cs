@@ -11,10 +11,12 @@ namespace Finance_Frontend_MVC.Data
 {
     public class AuthenticationService
     {
-        public AuthenticationService() {
+        public AuthenticationService()
+        {
         }
-    private string _APIToken { get; set; }
-        public async void GetAPIToken() {
+        private string _APIToken { get; set; }
+        public async Task<TokenResponse> GetAPIToken()
+        {
             var client = new HttpClient();
             var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
             if (disco.IsError)
@@ -34,9 +36,10 @@ namespace Finance_Frontend_MVC.Data
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
-                return;
             }
             Console.WriteLine(tokenResponse.Json);
+
+            return tokenResponse;
         }
     }
 
