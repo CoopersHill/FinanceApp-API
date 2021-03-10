@@ -11,14 +11,18 @@ namespace Finance_Frontend_MVC.Data
 {
     public class FinanceRepository : IFinanceRepository
     {
-        public FinanceRepository()
+        public FinanceRepository(HttpClient httpClient)
         {
+            _apiClient = httpClient;          
+
         }
-        private readonly string urlStub = "https://localhost:44325";
-        private readonly string bankAccountsEndPoint = "/api/BankAccountsAPI/";
+        //private readonly string urlStub = "https://localhost:44325";
+        //private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI/";
+        private HttpClient _apiClient;
+        
 
         //set up client with token and URL
-        public async Task<HttpClient> getConfiguredClient()
+        public async void getConfiguredClient()
         {
             var authenticationService = new AuthenticationService();
             TokenResponse sessionToken = await authenticationService.GetAPIToken(); //get our api token
@@ -26,28 +30,28 @@ namespace Finance_Frontend_MVC.Data
             if (sessionToken.IsError)
             {
                 Console.WriteLine("Failed to get API token");
-                return null;
+                //return null;
             }
 
-            var apiClient = new HttpClient();  // set up new http client to configure
-            apiClient.SetBearerToken(sessionToken.AccessToken);
-            return apiClient;
+            //var apiClient = new HttpClient();  // set up new http client to configure
+            _apiClient.SetBearerToken(sessionToken.AccessToken);
+            //return  apiClient;
         }
         public async Task<String> getAPIRouteAsync(string routeSuffix)
         {
-            var newEndpoint = String.Concat(urlStub, bankAccountsEndPoint, routeSuffix);
+            var newEndpoint = String.Concat(routeSuffix);
             return newEndpoint;
         }
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
         {
-            var httpClient = await getConfiguredClient();
+            //var httpClient = await getConfiguredClient();
             var requestUrl = await getAPIRouteAsync("");
             //string requestUrl = urlStub + bankAccountsEndPoint;
-            if (httpClient != null)
+            if (_apiClient != null)
             {
-                using (httpClient)
+                using (_apiClient)
                 {
-                    using (var response = await httpClient.GetAsync(requestUrl))
+                    using (var response = await _apiClient.GetAsync(requestUrl))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         var bankAccountsList = JsonConvert.DeserializeObject<IEnumerable<BankAccount>>(apiResponse);
@@ -60,7 +64,7 @@ namespace Finance_Frontend_MVC.Data
 
         public async Task<BankAccount> GetBankAccountsAsync(int? id)
         {
-            string requestUrl = urlStub + bankAccountsEndPoint;
+            string requestUrl = "";
             if (id != null)
             {
                 requestUrl += "/" + id; //get a single account
@@ -80,7 +84,7 @@ namespace Finance_Frontend_MVC.Data
 
         public async Task<BankAccount> AddBankAccountAsync(BankAccount bankAccount)
         {
-            string requestUrl = urlStub + bankAccountsEndPoint;
+            string requestUrl ="";
             using (var httpClient = new HttpClient())
             {
                 StringContent requestBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
@@ -97,7 +101,7 @@ namespace Finance_Frontend_MVC.Data
         public async Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount)
         {
             BankAccount updatedBankAccount = new BankAccount();
-            string requestUrl = urlStub + bankAccountsEndPoint + "/" + id;
+            string requestUrl =  "/" + id;
             using (var httpClient = new HttpClient())
             {
                 StringContent myBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
@@ -114,7 +118,7 @@ namespace Finance_Frontend_MVC.Data
         public async Task<bool> DeleteBankAccountAsync(int id)
         {
 
-            string requestUrl = urlStub + bankAccountsEndPoint + id;
+            string requestUrl = "\\" + id;
             using (var httpClient = new HttpClient())
             {
 

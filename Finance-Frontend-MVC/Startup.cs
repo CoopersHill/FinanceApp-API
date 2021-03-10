@@ -36,6 +36,11 @@ namespace Finance_Frontend_MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<IFinanceRepository, FinanceRepository>();
+            services.AddHttpClient<IFinanceRepository, FinanceRepository>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["BaseURL"] + Configuration["APIEndpoint"]);                
+                
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
