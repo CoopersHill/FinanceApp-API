@@ -58,6 +58,14 @@ namespace hwFinanceApp
                                                                     //.AllowCredentials(); can't use credentials with allowany origin
                                                                 });
             });
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("ApiScope", policy => 
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "api1");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,12 +84,13 @@ namespace hwFinanceApp
 
             app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                .RequireAuthorization("ApiScope");
             });
         }
     }

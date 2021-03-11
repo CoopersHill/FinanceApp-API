@@ -15,7 +15,7 @@ namespace Finance_Frontend_MVC.Controllers
     public class BankAccountsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly string urlStub = "https://localhost:44325";
+        private readonly string urlStub = "https://localhost:6001";
         private readonly string bankAccountsEndPoint = "/api/BankAccounts";
 
         private IFinanceRepository _financeRepository;

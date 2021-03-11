@@ -13,7 +13,8 @@ namespace Finance_Frontend_MVC.Data
     {
         public FinanceRepository(HttpClient httpClient)
         {
-            _apiClient = httpClient;          
+            _apiClient = httpClient;
+            getConfiguredClient();
 
         }
         //private readonly string urlStub = "https://localhost:44325";
