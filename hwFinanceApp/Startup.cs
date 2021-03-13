@@ -14,6 +14,7 @@ namespace hwFinanceApp
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; //name of default policy
         private string _FinanceConnectionString = null;
+        private string _tokenAuthoritystring = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,12 +26,13 @@ namespace hwFinanceApp
         public void ConfigureServices(IServiceCollection services)
         {
             _FinanceConnectionString = Configuration["ConnectionStrings: HWFinanceConnectionStringProd"];
+            _tokenAuthoritystring = Configuration["TokenAuthority"];
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:5001";
+                    options.Authority = _tokenAuthoritystring;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
@@ -48,16 +50,16 @@ namespace hwFinanceApp
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
-            //                                                    {
-            //                                                        builder.AllowAnyOrigin()
-            //                                                        .AllowAnyMethod()
-            //                                                        .AllowAnyHeader();
-            //                                                        //.AllowCredentials(); can't use credentials with allowany origin
-            //                                                    });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+                                                                {
+                                                                    builder.AllowAnyOrigin()
+                                                                    .AllowAnyMethod()
+                                                                    .AllowAnyHeader();
+                                                                    //.AllowCredentials(); can't use credentials with allowany origin
+                                                                });
+            });
             services.AddAuthorization(options => 
             {
                 options.AddPolicy("ApiScope", policy => 
@@ -82,7 +84,7 @@ namespace hwFinanceApp
 
             app.UseRouting();
 
-            //app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+            app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
             app.UseAuthentication();
             app.UseAuthorization();

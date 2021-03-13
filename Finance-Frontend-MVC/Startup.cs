@@ -36,12 +36,19 @@ namespace Finance_Frontend_MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<IFinanceRepository, FinanceRepository>();
-            services.AddHttpClient<IFinanceRepository, FinanceRepository>(client =>
+            services.AddScoped<IAuthenticationService, AuthenticationService>();            
+            services.AddHttpClient<IAuthenticationService, AuthenticationService>( client =>
             {
-                client.BaseAddress = new Uri(Configuration["BaseURL"]);                
-               
+                client.BaseAddress = new Uri(Configuration["BaseURL"]);
+
             });
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            //services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //services.AddHttpClient<IFinanceRepository, FinanceRepository>(client =>
+            //{
+            //    client.BaseAddress = new Uri(Configuration["BaseURL"]);                
+
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

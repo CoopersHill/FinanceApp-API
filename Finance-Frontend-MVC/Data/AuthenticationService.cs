@@ -11,14 +11,21 @@ namespace Finance_Frontend_MVC.Data
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public AuthenticationService()
+        public AuthenticationService(HttpClient httpClient)
         {
+            _httpClient = httpClient;
+            GetAPIToken();
         }
         private string _APIToken { get; set; }
-        public async Task<TokenResponse> GetAPIToken()
+        private HttpClient _httpClient;
+        
+        public HttpClient httpClient { get => _httpClient; set => _httpClient = value; }
+                
+            public async Task<TokenResponse> GetAPIToken()
         {
-            var client = new HttpClient();
-            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            //var client = new HttpClient();
+
+            var disco = await _httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
             if (disco.IsError)
             {
                 //var logger = services.GetRequiredService<ILogger<Program>>();
@@ -26,7 +33,7 @@ namespace Finance_Frontend_MVC.Data
                 Console.WriteLine(disco.Error);
             }
 
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
                 Address = disco.TokenEndpoint,
                 ClientId = "client",
@@ -37,8 +44,8 @@ namespace Finance_Frontend_MVC.Data
             {
                 Console.WriteLine(tokenResponse.Error);
             }
-            Console.WriteLine(tokenResponse.Json);
 
+            _httpClient.SetBearerToken(tokenResponse.AccessToken);
             return tokenResponse;
         }
     }
