@@ -14,19 +14,46 @@ namespace Finance_Frontend_MVC.Data
         public FinanceRepository(HttpClient httpClient)
         {
             _apiClient = httpClient;
-            getConfiguredClient();
+         
 
         }
         //private readonly string urlStub = "https://localhost:44325";
-        //private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI/";
+        private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI/";
         private HttpClient _apiClient;
-        
+
+        public async Task<TokenResponse> GetAPIToken()
+        {
+            var client = new HttpClient();
+            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            if (disco.IsError)
+            {
+                //var logger = services.GetRequiredService<ILogger<Program>>();
+                //logger.LogError(disco.Error, "An error occurred getting the API token");                 
+                Console.WriteLine(disco.Error);
+            }
+
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = "client",
+                ClientSecret = "secret",
+                Scope = "api1"
+            });
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+            }
+            Console.WriteLine(tokenResponse.Json);
+
+            return tokenResponse;
+        }
 
         //set up client with token and URL
         public async void getConfiguredClient()
         {
-            var authenticationService = new AuthenticationService();
-            TokenResponse sessionToken = await authenticationService.GetAPIToken(); //get our api token
+            
+            //var authenticationService = new AuthenticationService();
+            TokenResponse sessionToken = await GetAPIToken(); //get our api token
 
             if (sessionToken.IsError)
             {
@@ -35,24 +62,29 @@ namespace Finance_Frontend_MVC.Data
             }
 
             //var apiClient = new HttpClient();  // set up new http client to configure
-            _apiClient.SetBearerToken(sessionToken.AccessToken);
+             _apiClient.SetBearerToken(sessionToken.AccessToken);
             //return  apiClient;
         }
         public async Task<String> getAPIRouteAsync(string routeSuffix)
         {
-            var newEndpoint = String.Concat(routeSuffix);
+            var newEndpoint = String.Concat(_bankAccountsEndPoint,routeSuffix);
             return newEndpoint;
         }
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
         {
+            // getConfiguredClient();
             //var httpClient = await getConfiguredClient();
-            var requestUrl = await getAPIRouteAsync("");
-            //string requestUrl = urlStub + bankAccountsEndPoint;
+            TokenResponse sessionToken = await GetAPIToken();
+            _apiClient.SetBearerToken(sessionToken.AccessToken);
+            _apiClient.BaseAddress = null;
+            // var requestUrl = await getAPIRouteAsync("");
+            string urlStub = "";
+            string requestUrl = urlStub + _bankAccountsEndPoint;
             if (_apiClient != null)
             {
                 using (_apiClient)
                 {
-                    using (var response = await _apiClient.GetAsync(requestUrl))
+                    using (var response = await _apiClient.GetAsync("https://localhost:44325/api/BankAccountsAPI/") )
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         var bankAccountsList = JsonConvert.DeserializeObject<IEnumerable<BankAccount>>(apiResponse);

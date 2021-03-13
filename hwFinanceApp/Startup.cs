@@ -48,16 +48,16 @@ namespace hwFinanceApp
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
-                                                                {
-                                                                    builder.AllowAnyOrigin()
-                                                                    .AllowAnyMethod()
-                                                                    .AllowAnyHeader();
-                                                                    //.AllowCredentials(); can't use credentials with allowany origin
-                                                                });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+            //                                                    {
+            //                                                        builder.AllowAnyOrigin()
+            //                                                        .AllowAnyMethod()
+            //                                                        .AllowAnyHeader();
+            //                                                        //.AllowCredentials(); can't use credentials with allowany origin
+            //                                                    });
+            //});
             services.AddAuthorization(options => 
             {
                 options.AddPolicy("ApiScope", policy => 
@@ -82,15 +82,14 @@ namespace hwFinanceApp
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+            //app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers()
-                .RequireAuthorization("ApiScope");
+                endpoints.MapControllers().RequireAuthorization("ApiScope");
             });
         }
     }
