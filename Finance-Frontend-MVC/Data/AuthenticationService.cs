@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Finance_Frontend_MVC.Data
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         public AuthenticationService()
         {

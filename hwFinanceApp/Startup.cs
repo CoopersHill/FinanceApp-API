@@ -84,13 +84,13 @@ namespace hwFinanceApp
 
             app.UseCors(MyAllowSpecificOrigins); //for more information, see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers()
-                .RequireAuthorization("ApiScope");
+                endpoints.MapControllers();
+                //.RequireAuthorization("ApiScope");
             });
         }
     }

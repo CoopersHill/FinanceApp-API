@@ -17,12 +17,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "hwFinanceApp": { 
+    "hwFinanceApp": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:6001",
+      "applicationUrl": "https://localhost:44325",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
