@@ -17,11 +17,9 @@ namespace Finance_Frontend_MVC.Data
             GetAPIToken();
         }
         private string _APIToken { get; set; }
-        private HttpClient _httpClient;
-        
-        public HttpClient httpClient { get => _httpClient; set => _httpClient = value; }
-                
-            public async Task<TokenResponse> GetAPIToken()
+        private HttpClient _httpClient;        
+
+        public async Task<TokenResponse> GetAPIToken()
         {
             //var client = new HttpClient();
 
@@ -29,7 +27,8 @@ namespace Finance_Frontend_MVC.Data
             if (disco.IsError)
             {
                 //var logger = services.GetRequiredService<ILogger<Program>>();
-                //logger.LogError(disco.Error, "An error occurred getting the API token");                 
+                //logger.LogError(disco.Error, "An error occurred getting the API token");
+
                 Console.WriteLine(disco.Error);
             }
 
@@ -40,13 +39,28 @@ namespace Finance_Frontend_MVC.Data
                 ClientSecret = "secret",
                 Scope = "api1"
             });
+
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
+                return null;
+            }
+            return tokenResponse;
+
+        }
+        public async Task<HttpClient> GetClient()
+        {
+            var tokenResponse = await GetAPIToken();
+            if (tokenResponse != null)
+            {
+                _httpClient.SetBearerToken(tokenResponse.AccessToken);
+                return _httpClient;
+            }
+            else
+            { 
+                return null;
             }
 
-            _httpClient.SetBearerToken(tokenResponse.AccessToken);
-            return tokenResponse;
         }
     }
 

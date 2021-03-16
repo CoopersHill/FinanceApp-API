@@ -13,7 +13,7 @@ namespace Finance_Frontend_MVC.Data
     {
        public FinanceRepository(IAuthenticationService authenticationService)
         {
-            //_apiClient = httpClient;
+           
             _authenticationService = authenticationService;         
 
         }
@@ -32,7 +32,7 @@ namespace Finance_Frontend_MVC.Data
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
         {
            
-            _apiClient = _authenticationService.httpClient;
+            _apiClient = await _authenticationService.GetClient();
             
             //_apiClient.BaseAddress = null;
             // var requestUrl = await getAPIRouteAsync("");
