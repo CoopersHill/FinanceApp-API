@@ -17,7 +17,6 @@ namespace Finance_Frontend_MVC.Data
             _authenticationService = authenticationService;         
 
         }
-        //private readonly string urlStub = "https://localhost:44325";
         private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI/";
         private HttpClient _apiClient;
         private IAuthenticationService _authenticationService;
@@ -32,10 +31,8 @@ namespace Finance_Frontend_MVC.Data
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()
         {
            
-            _apiClient = await _authenticationService.GetClient();
+            _apiClient = await _authenticationService.GetClient();         
             
-            //_apiClient.BaseAddress = null;
-            // var requestUrl = await getAPIRouteAsync("");
             string urlStub = "";
             string requestUrl = urlStub + _bankAccountsEndPoint;
             if (_apiClient != null)
@@ -120,10 +117,7 @@ namespace Finance_Frontend_MVC.Data
                     Console.WriteLine(apiResponse);
                 }
             }
-
-
             return true;
-
         }
     }
 

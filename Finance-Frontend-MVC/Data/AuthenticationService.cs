@@ -13,22 +13,18 @@ namespace Finance_Frontend_MVC.Data
     {
         public AuthenticationService(HttpClient httpClient)
         {
-            _httpClient = httpClient;
-            GetAPIToken();
+            _httpClient = httpClient;       
         }
         private string _APIToken { get; set; }
         private HttpClient _httpClient;        
 
         public async Task<TokenResponse> GetAPIToken()
         {
-            //var client = new HttpClient();
+            
 
             var disco = await _httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
             if (disco.IsError)
             {
-                //var logger = services.GetRequiredService<ILogger<Program>>();
-                //logger.LogError(disco.Error, "An error occurred getting the API token");
-
                 Console.WriteLine(disco.Error);
             }
 
