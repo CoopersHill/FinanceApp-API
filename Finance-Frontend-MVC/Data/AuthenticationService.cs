@@ -13,10 +13,12 @@ namespace Finance_Frontend_MVC.Data
     {
         public AuthenticationService(HttpClient httpClient)
         {
-            _httpClient = httpClient;       
+            _httpClient = httpClient;  
+        
         }
         private string _APIToken { get; set; }
-        private HttpClient _httpClient;        
+        private HttpClient _httpClient;
+        public string authenticationURL;
 
         public async Task<TokenResponse> GetAPIToken()
         {

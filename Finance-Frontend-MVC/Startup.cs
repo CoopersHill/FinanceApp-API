@@ -36,12 +36,16 @@ namespace Finance_Frontend_MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<IFinanceRepository, FinanceRepository>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();            
-            services.AddHttpClient<IAuthenticationService, AuthenticationService>( client =>
-            {
-                client.BaseAddress = new Uri(Configuration["BaseURL"]);
+            services.AddScoped<IAuthenticationService, AuthenticationService>(
+                options =>
+                {
+                    authenticationURL = 
+                });
+            services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
+           {
+               client.BaseAddress = new Uri(Configuration["BaseURL"]);              
 
-            });
+           });
 
             //services.AddScoped<IAuthenticationService, AuthenticationService>();
             //services.AddHttpClient<IFinanceRepository, FinanceRepository>(client =>
