@@ -33,6 +33,7 @@ namespace Finance_Frontend_MVC.Data
            
             _apiClient = await _authenticationService.GetClient();         
             
+            
             string urlStub = "";
             string requestUrl = urlStub + _bankAccountsEndPoint;
             if (_apiClient != null)
