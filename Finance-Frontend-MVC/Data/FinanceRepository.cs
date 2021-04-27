@@ -17,7 +17,7 @@ namespace Finance_Frontend_MVC.Data
             _authenticationService = authenticationService;         
 
         }
-        private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI/";
+        private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI";
         private HttpClient _apiClient;
         private IAuthenticationService _authenticationService;
 
@@ -35,12 +35,12 @@ namespace Finance_Frontend_MVC.Data
             
             
             string urlStub = "";
-            string requestUrl = urlStub + _bankAccountsEndPoint;
+            string requestUrl = @"/";
             if (_apiClient != null)
             {
                 using (_apiClient)
                 {
-                    using (var response = await _apiClient.GetAsync("https://localhost:44325/api/BankAccountsAPI/"))
+                    using (var response = await _apiClient.GetAsync(_bankAccountsEndPoint + requestUrl))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         var bankAccountsList = JsonConvert.DeserializeObject<IEnumerable<BankAccount>>(apiResponse);
@@ -59,9 +59,15 @@ namespace Finance_Frontend_MVC.Data
             {
                 requestUrl += "/" + id; //get a single account
             }
-            using (var httpClient = new HttpClient())
+            _apiClient = await _authenticationService.GetClient();
+
+
+            string urlStub = "";
+            requestUrl = urlStub + _bankAccountsEndPoint + requestUrl;
+
+            using (_apiClient)
             {
-                using (var response = await httpClient.GetAsync(requestUrl))
+                using (var response = await _apiClient.GetAsync(requestUrl))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var bankAccountsList = JsonConvert.DeserializeObject<BankAccount>(apiResponse);

@@ -41,7 +41,7 @@ namespace Finance_Frontend_MVC.Controllers
             //}
 
             var bankAccountList = await _financeRepository.GetBankAccountsAsync();
-            if (bankAccountList.Count() > 0)
+            if (bankAccountList.Count() < 1)
             {
                 return NotFound();
             }
