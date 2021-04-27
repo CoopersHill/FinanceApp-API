@@ -98,10 +98,13 @@ namespace Finance_Frontend_MVC.Data
         {
             BankAccount updatedBankAccount = new BankAccount();
             string requestUrl =  "/" + id;
-            using (var httpClient = new HttpClient())
+            _apiClient = await _authenticationService.GetClient();
+            requestUrl = _bankAccountsEndPoint + requestUrl;
+
+            using (_apiClient)
             {
                 StringContent myBody = new StringContent(JsonConvert.SerializeObject(bankAccount), System.Text.Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PutAsync(requestUrl, myBody))
+                using (var response = await _apiClient.PutAsync(requestUrl, myBody))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     updatedBankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
@@ -113,12 +116,14 @@ namespace Finance_Frontend_MVC.Data
         }
         public async Task<bool> DeleteBankAccountAsync(int id)
         {
+            string requestUrl = @"\" + id;
+            _apiClient = await _authenticationService.GetClient();
+            requestUrl = _bankAccountsEndPoint + requestUrl;
 
-            string requestUrl = "\\" + id;
-            using (var httpClient = new HttpClient())
+            using (_apiClient)
             {
 
-                using (var response = await httpClient.DeleteAsync(requestUrl))
+                using (var response = await _apiClient.DeleteAsync(requestUrl))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(apiResponse);

@@ -58,8 +58,7 @@ namespace Finance_Frontend_MVC.Controllers
                 return NotFound();
             }
 
-            var bankAccount = await _context.BankAccount
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var bankAccount = await _financeRepository.GetBankAccountsAsync(id);
             if (bankAccount == null)
             {
                 return NotFound();
@@ -157,8 +156,7 @@ namespace Finance_Frontend_MVC.Controllers
                 return NotFound();
             }
 
-            var bankAccount = await _context.BankAccount
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var bankAccount = await _financeRepository.GetBankAccountsAsync(id);
             if (bankAccount == null)
             {
                 return NotFound();
