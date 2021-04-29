@@ -22,10 +22,10 @@ namespace Finance_Frontend_MVC.Data
         private IAuthenticationService _authenticationService;
 
         
-        public async Task<String> getAPIRouteAsync(string routeSuffix)
+        public String getAPIRouteAsync(string routeSuffix)
         {
             var newEndpoint = String.Concat(_bankAccountsEndPoint,routeSuffix);
-            return newEndpoint;
+            return  newEndpoint;
         }
 
         public async Task<IEnumerable<BankAccount>> GetBankAccountsAsync()

@@ -22,14 +22,20 @@ namespace hwFinanceApp.Controllers
 
         // GET: api/BankAccounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankAccounts()
+        public async Task<ActionResult<IEnumerable<BankAccountDTO>>> GetBankAccounts()
         {
-            var bankAccounts  = await _context.BankAccounts.ToListAsync();
-            foreach (var account in bankAccounts) {
-                account.transactions = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).ToListAsync();
-            }
+            var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO() {
+                ID = b.ID,
+                AccountDescription = b.AccountDescription,
+                AccountType = b.AccountType,
+                AccountOwnerId = b.AccountOwnerId,
+                AccountBalance = b.AccountBalance
+            }).ToListAsync();
 
-            return bankAccounts;
+            //foreach (var account in bankAccounts) {
+            //    account.transactions = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).ToListAsync();
+            //}
+            return bankAccounts ;
         }
 
         // GET: api/BankAccounts/5
