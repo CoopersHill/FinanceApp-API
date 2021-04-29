@@ -24,13 +24,15 @@ namespace hwFinanceApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BankAccountDTO>>> GetBankAccounts()
         {
-            var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO() {
-                ID = b.ID,
-                AccountDescription = b.AccountDescription,
-                AccountType = b.AccountType,
-                AccountOwnerId = b.AccountOwnerId,
-                AccountBalance = b.AccountBalance
-            }).ToListAsync();
+            //var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO() {
+            //    ID = b.ID,
+            //    AccountDescription = b.AccountDescription,
+            //    AccountType = b.AccountType,
+            //    AccountOwnerId = b.AccountOwnerId,
+            //    AccountBalance = b.AccountBalance
+            //}).ToListAsync();
+            var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO(b)
+            ).ToListAsync();
 
             //foreach (var account in bankAccounts) {
             //    account.transactions = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).ToListAsync();
@@ -40,10 +42,11 @@ namespace hwFinanceApp.Controllers
 
         // GET: api/BankAccounts/5
         [HttpGet("{ID}")]
-        public async Task<ActionResult<BankAccount>> GetBankAccount(int ID)
+        public async Task<ActionResult<BankAccountDTO>> GetBankAccount(int ID)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(ID);
-            bankAccount.transactions = _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
+            var bankAccountDTO = new BankAccountDTO(bankAccount);
+            bankAccountDTO.transactions = _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
             bankAccount.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
 
             if (bankAccount == null)
@@ -51,14 +54,14 @@ namespace hwFinanceApp.Controllers
                 return NotFound();
             }
 
-            return bankAccount;
+            return bankAccountDTO;
         }
         
 
         // PUT: api/BankAccounts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{ID}")]
-        public async Task<IActionResult> PutBankAccount(int ID, BankAccount bankAccount)
+        public async Task<IActionResult> PutBankAccount(int ID, BankAccountDTO bankAccount)
         {
             if (ID != bankAccount.ID)
             {
@@ -91,9 +94,9 @@ namespace hwFinanceApp.Controllers
         // POST: api/BankAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BankAccount>> PostBankAccount(BankAccount bankAccount)
+        public async Task<ActionResult<BankAccount>> PostBankAccount(BankAccountDTO bankAccount)
         {
-            _context.BankAccounts.Add(bankAccount);
+            _context.BankAccounts.Add(bankAccount.Convert());
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBankAccount", new { ID = bankAccount.ID }, bankAccount);
