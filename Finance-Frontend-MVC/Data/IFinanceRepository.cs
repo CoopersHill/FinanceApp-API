@@ -1,6 +1,8 @@
 ﻿using Finance_Frontend_MVC.Models;
+using hwFinanceApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 
 namespace Finance_Frontend_MVC.Data
 {
@@ -11,7 +13,7 @@ namespace Finance_Frontend_MVC.Data
         
         Task<IEnumerable<BankAccount>> GetBankAccountsAsync();
         Task<BankAccount> GetBankAccountsAsync(int? id);
-        Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount);
+        Task<BankAccountDTO> UpdateBankAccountAsync(int id, BankAccountDTO bankAccount);
         
     }
 }

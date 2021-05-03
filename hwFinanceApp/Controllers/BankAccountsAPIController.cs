@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using hwFinanceApp.Models;
+using hwFinanceApp.helperServices;
 
 namespace hwFinanceApp.Controllers
 {
@@ -14,6 +15,7 @@ namespace hwFinanceApp.Controllers
     public class BankAccountsAPIController : ControllerBase
     {
         private readonly FinanceContext _context;
+        private readonly DTOService _dTOService = new DTOService();
 
         public BankAccountsAPIController(FinanceContext context)
         {
@@ -24,14 +26,8 @@ namespace hwFinanceApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BankAccountDTO>>> GetBankAccounts()
         {
-            //var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO() {
-            //    ID = b.ID,
-            //    AccountDescription = b.AccountDescription,
-            //    AccountType = b.AccountType,
-            //    AccountOwnerId = b.AccountOwnerId,
-            //    AccountBalance = b.AccountBalance
-            //}).ToListAsync();
-            var bankAccounts = await _context.BankAccounts.Select(b => new BankAccountDTO(b)
+           
+            var bankAccounts = await _context.BankAccounts.Select(b => _dTOService.CreateDTO(b)
             ).ToListAsync();
 
             //foreach (var account in bankAccounts) {
@@ -45,7 +41,7 @@ namespace hwFinanceApp.Controllers
         public async Task<ActionResult<BankAccountDTO>> GetBankAccount(int ID)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(ID);
-            var bankAccountDTO = new BankAccountDTO(bankAccount);
+            var bankAccountDTO = _dTOService.CreateDTO(bankAccount);
             bankAccountDTO.transactions = _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
             bankAccount.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
 
@@ -68,9 +64,9 @@ namespace hwFinanceApp.Controllers
                 return BadRequest();
             }
             var transactions =  _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
-            bankAccount.transactions = transactions;
+            //bankAccount.transactions = transactions;
 
-            _context.Entry(bankAccount).State = EntityState.Modified;
+            _context.Entry(_dTOService.Convert(bankAccount)).State = EntityState.Modified;
 
             try
             {
@@ -94,12 +90,12 @@ namespace hwFinanceApp.Controllers
         // POST: api/BankAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BankAccount>> PostBankAccount(BankAccountDTO bankAccount)
+        public async Task<ActionResult<BankAccount>> PostBankAccount(BankAccountDTO bankAccountDTO)
         {
-            _context.BankAccounts.Add(bankAccount.Convert());
+            _context.BankAccounts.Add(_dTOService.Convert(bankAccountDTO));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBankAccount", new { ID = bankAccount.ID }, bankAccount);
+            return CreatedAtAction("GetBankAccount", new { ID = bankAccountDTO.ID }, bankAccountDTO);
         }
 
         // DELETE: api/BankAccounts/5

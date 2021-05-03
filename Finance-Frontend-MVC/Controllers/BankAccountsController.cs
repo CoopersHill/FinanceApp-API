@@ -9,6 +9,7 @@ using Finance_Frontend_MVC.Data;
 using Finance_Frontend_MVC.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
+using hwFinanceApp.Models;
 
 namespace Finance_Frontend_MVC.Controllers
 {
@@ -110,7 +111,7 @@ namespace Finance_Frontend_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,AccountDescription,AccountType,AccountOwnerId,AccountBalance")] BankAccount bankAccount)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,AccountDescription,AccountType,AccountOwnerId,AccountBalance")] BankAccountDTO bankAccount)
         {
             if (id != bankAccount.ID)
             {

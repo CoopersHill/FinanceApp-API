@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Finance_Frontend_MVC.Models;
+using hwFinanceApp.Models;
 using IdentityModel.Client;
 using Newtonsoft.Json;
 
@@ -94,9 +95,9 @@ namespace Finance_Frontend_MVC.Data
             }
             return bankAccount;
         }
-        public async Task<BankAccount> UpdateBankAccountAsync(int id, BankAccount bankAccount)
+        public async Task<BankAccountDTO> UpdateBankAccountAsync(int id, BankAccountDTO bankAccount)
         {
-            BankAccount updatedBankAccount = new BankAccount();
+            BankAccountDTO updatedBankAccount = new BankAccountDTO();
             string requestUrl =  "/" + id;
             _apiClient = await _authenticationService.GetClient();
             requestUrl = _bankAccountsEndPoint + requestUrl;
@@ -107,7 +108,7 @@ namespace Finance_Frontend_MVC.Data
                 using (var response = await _apiClient.PutAsync(requestUrl, myBody))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    updatedBankAccount = JsonConvert.DeserializeObject<BankAccount>(apiResponse);
+                    updatedBankAccount = JsonConvert.DeserializeObject<BankAccountDTO>(apiResponse);
                 }
             }
 

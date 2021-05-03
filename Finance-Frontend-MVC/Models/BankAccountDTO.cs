@@ -8,7 +8,7 @@ namespace hwFinanceApp.Models
     public class BankAccountDTO
     {
         public BankAccountDTO() {
-            this.transactions = new HashSet<Transaction>();            
+            this.transactions = new HashSet<TransactionDTO>();            
         }
         
         
@@ -18,7 +18,7 @@ namespace hwFinanceApp.Models
         public int AccountOwnerId { get; set; } //User who owns the account
         public double AccountBalance { get; set; }
 
-        public virtual ICollection<Transaction> transactions { get; set; }
+        public ICollection<TransactionDTO> transactions { get; set; }
 
     }
 }
