@@ -60,6 +60,7 @@ namespace Finance_Frontend_MVC.Controllers
             }
 
             var bankAccount = await _financeRepository.GetBankAccountsAsync(id);
+            
             if (bankAccount == null)
             {
                 return NotFound();
