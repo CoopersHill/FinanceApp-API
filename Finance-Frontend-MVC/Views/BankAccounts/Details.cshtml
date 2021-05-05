@@ -40,18 +40,21 @@
 <table class="table">
     <thead>
         <tr>
-            Transactionss @{ Model.transactions.Count}
+            Transactions @{ Model.transactions.Count();}
         </tr>
     </thead>
     <tbody>
         @foreach (var item in @Model.transactions)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(item => item.ID)
-                </td>
-
-            </tr>
+            
+        <tr>
+            <td>
+                TransactionID @item.ID
+            </td>
+            <td>
+                   Description: @item.Description
+            </td>
+        </tr>
         }
 
     </tbody>
