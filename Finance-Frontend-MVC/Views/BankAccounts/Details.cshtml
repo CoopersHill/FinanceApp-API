@@ -42,21 +42,31 @@
         <tr>
             Transactions @{ Model.transactions.Count();}
         </tr>
+        <tr>
+            <td> Transaction ID</td>
+            <td>  amount </td>
+            <td>Description</td>
+        </tr>
     </thead>
     <tbody>
-        @foreach (var item in @Model.transactions)
+            @{ List<Transaction> theseTransactions = Model.transactions.ToList();
+                for (var i = 0; i < theseTransactions.Count(); i++)
         {
-            
-        <tr>
-            <td>
-                TransactionID @item.ID
-            </td>
-            <td>
-                   Description: @item.Description
-            </td>
-        </tr>
-        }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(item => theseTransactions[i].ID)
 
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => theseTransactions[i].Amount)
+
+                        </td>
+                        <td>
+                            : @Html.DisplayFor(item => theseTransactions[i].Description)
+                        </td>
+                    </tr>
+                    }
+                }
     </tbody>
 
 </table>
