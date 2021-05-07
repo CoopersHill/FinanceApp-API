@@ -39,34 +39,44 @@
 
 <table class="table">
     <thead>
-        <tr>
-            Transactions @{ Model.transactions.Count();}
-        </tr>
-        <tr>
-            <td> Transaction ID</td>
-            <td>  amount </td>
-            <td>Description</td>
-        </tr>
+        @{ List<Transaction> theseTransactions = Model.transactions.ToList();
+            <tr>
+                Total Transactions: @{ Model.transactions.Count();}
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(item => theseTransactions[0].ID)
+
+                </td>
+                <td>
+                    @Html.DisplayNameFor(item => theseTransactions[0].Amount)
+
+                </td>
+                <td>
+                     @Html.DisplayNameFor(item => theseTransactions[0].Description)
+                </td>
+            </tr>
+        }
     </thead>
     <tbody>
-            @{ List<Transaction> theseTransactions = Model.transactions.ToList();
-                for (var i = 0; i < theseTransactions.Count(); i++)
-        {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(item => theseTransactions[i].ID)
+        @{
+            for (var i = 0; i < theseTransactions.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(item => theseTransactions[i].ID)
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(item => theseTransactions[i].Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => theseTransactions[i].Amount)
 
-                        </td>
-                        <td>
-                            : @Html.DisplayFor(item => theseTransactions[i].Description)
-                        </td>
-                    </tr>
-                    }
-                }
+                    </td>
+                    <td>
+                         @Html.DisplayFor(item => theseTransactions[i].Description)
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 
 </table>

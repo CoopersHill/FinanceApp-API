@@ -37,18 +37,18 @@ namespace Finance_Frontend_MVC
             _connection = builder.ConnectionString;
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer (
+                options.UseSqlServer(
                    _connection));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddScoped<IFinanceRepository, FinanceRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
            {
-               client.BaseAddress = new Uri(Configuration["BaseURL"]);              
+               client.BaseAddress = new Uri(Configuration["BaseURL"]);
 
            });
 
