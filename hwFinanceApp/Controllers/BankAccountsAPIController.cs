@@ -28,11 +28,12 @@ namespace hwFinanceApp.Controllers
         {
            
             var bankAccounts = await _context.BankAccounts.Select(b => _dTOService.CreateDTO(b)
+
             ).ToListAsync();
 
-            //foreach (var account in bankAccounts) {
-            //    account.transactions = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).ToListAsync();
-            //}
+            foreach (var account in bankAccounts) {
+                account.AccountBalance = await  _context.Transactions.Where(g => g.BankAccountID == account.ID).SumAsync(b => b.Amount);
+            }
             return bankAccounts ;
         }
 
@@ -43,7 +44,7 @@ namespace hwFinanceApp.Controllers
             var bankAccount = await _context.BankAccounts.FindAsync(ID);
             var bankAccountDTO = _dTOService.CreateDTO(bankAccount);
             bankAccountDTO.transactions = _context.Transactions.Where(g => g.BankAccountID == ID).ToList();
-            bankAccount.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
+            bankAccountDTO.AccountBalance = bankAccount.transactions.Select(h => h.Amount).Sum();
 
             if (bankAccount == null)
             {
