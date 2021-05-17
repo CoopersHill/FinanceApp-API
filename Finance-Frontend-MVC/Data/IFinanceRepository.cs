@@ -14,6 +14,8 @@ namespace Finance_Frontend_MVC.Data
         Task<IEnumerable<BankAccount>> GetBankAccountsAsync();
         Task<BankAccount> GetBankAccountsAsync(int? id);
         Task<BankAccountDTO> UpdateBankAccountAsync(int id, BankAccountDTO bankAccount);
+        Task<TransactionDTO> GetTransactionsAsync(int? id);
         
+
     }
 }

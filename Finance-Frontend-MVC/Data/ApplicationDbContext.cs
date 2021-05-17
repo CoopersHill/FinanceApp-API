@@ -16,5 +16,6 @@ namespace Finance_Frontend_MVC.Data
         }
         public DbSet<Finance_Frontend_MVC.Models.BankAccount> BankAccount { get; set; }
         public DbSet<hwFinanceApp.Models.BankAccountDTO> BankAccountDTO { get; set; }
+        public DbSet<hwFinanceApp.Models.TransactionDTO> TransactionDTO { get; set; }
     }
 }

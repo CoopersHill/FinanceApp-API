@@ -14,11 +14,8 @@ using hwFinanceApp.Models;
 namespace Finance_Frontend_MVC.Controllers
 {
     public class BankAccountsController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-        private readonly string urlStub = "https://localhost:6001";
-        private readonly string bankAccountsEndPoint = "/api/BankAccounts";
-
+    {       
+        
         private IFinanceRepository _financeRepository;
       
 
@@ -186,7 +183,7 @@ namespace Finance_Frontend_MVC.Controllers
 
         private bool BankAccountExists(int id)
         {
-            return _context.BankAccount.Any(e => e.ID == id);
+            return true; //_context.BankAccount.Any(e => e.ID == id);
         }
     }
 }

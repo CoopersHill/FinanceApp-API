@@ -19,6 +19,8 @@ namespace Finance_Frontend_MVC.Data
 
         }
         private readonly string _bankAccountsEndPoint = "/api/BankAccountsAPI";
+        private readonly string _transactionsEndPoint = "/api/Transactions";
+
         private HttpClient _apiClient;
         private IAuthenticationService _authenticationService;
 
@@ -131,6 +133,30 @@ namespace Finance_Frontend_MVC.Data
                 }
             }
             return true;
+        }
+
+        public async Task<TransactionDTO> GetTransactionsAsync(int? id)
+        {
+            string requestUrl = "";
+            if (id != null)
+            {
+                requestUrl += "/" + id; //get a single account
+            }
+            _apiClient = await _authenticationService.GetClient();
+
+
+            string urlStub = "";
+            requestUrl = urlStub + _transactionsEndPoint + requestUrl;
+
+            using (_apiClient)
+            {
+                using (var response = await _apiClient.GetAsync(requestUrl))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    TransactionDTO transaction = JsonConvert.DeserializeObject<TransactionDTO>(apiResponse);
+                    return transaction;
+                }
+            }
         }
     }
 
