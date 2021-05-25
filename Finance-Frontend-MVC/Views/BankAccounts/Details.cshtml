@@ -53,7 +53,7 @@
 
                 </td>
                 <td>
-                     @Html.DisplayNameFor(item => theseTransactions[0].Description)
+                    @Html.DisplayNameFor(item => theseTransactions[0].Description)
                 </td>
             </tr>
         }
@@ -64,15 +64,17 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(item => theseTransactions[i].ID)
+                        <a asp-controller="TransactionDTOes" asp-action="Details" asp-route-id="@theseTransactions[i].ID">
+                            @Html.DisplayFor(item => theseTransactions[i].ID)
 
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(item => theseTransactions[i].Amount)
 
                     </td>
                     <td>
-                         @Html.DisplayFor(item => theseTransactions[i].Description)
+                        @Html.DisplayFor(item => theseTransactions[i].Description)
                     </td>
                 </tr>
             }

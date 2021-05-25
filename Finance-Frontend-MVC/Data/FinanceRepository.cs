@@ -134,6 +134,25 @@ namespace Finance_Frontend_MVC.Data
             }
             return true;
         }
+        public async Task<IEnumerable<TransactionDTO>> GetTransactionsAsync()
+        {
+            string requestUrl = "";            
+            _apiClient = await _authenticationService.GetClient();
+
+
+            string urlStub = "";
+            requestUrl = urlStub + _transactionsEndPoint + requestUrl;
+
+            using (_apiClient)
+            {
+                using (var response = await _apiClient.GetAsync(requestUrl))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                   var transactions = JsonConvert.DeserializeObject<IEnumerable<TransactionDTO>>(apiResponse);
+                    return transactions.ToList();
+                }
+            }
+        }
 
         public async Task<TransactionDTO> GetTransactionsAsync(int? id)
         {

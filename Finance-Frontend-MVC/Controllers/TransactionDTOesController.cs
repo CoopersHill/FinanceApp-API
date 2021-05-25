@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Finance_Frontend_MVC.Data;
 using hwFinanceApp.Models;
 
-namespace Finance_Frontend_MVC.Views
+namespace Finance_Frontend_MVC.Controllers
 {
     public class TransactionDTOesController : Controller
     {
@@ -26,7 +26,8 @@ namespace Finance_Frontend_MVC.Views
         // GET: TransactionDTOes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TransactionDTO.ToListAsync());
+            var transactions = await _financeRepository.GetTransactionsAsync(null);
+            return View(transactions);
         }
 
         // GET: TransactionDTOes/Details/5
