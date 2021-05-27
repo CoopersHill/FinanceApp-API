@@ -22,9 +22,11 @@ namespace hwFinanceApp.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var catList = await _context.Categories.Select(c => new CategoryDTO(c)).ToListAsync();
+            return catList;
+            //return await _context.Categories.ToListAsync();
         }
 
         // GET: api/Categories/5

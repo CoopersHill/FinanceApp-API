@@ -22,6 +22,7 @@ namespace hwFinanceApp.Models
 
         public string Type { get; set; }
         public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
         public string EnteredByID { get; set; }
         public bool RecStatus { get; set; }        
         

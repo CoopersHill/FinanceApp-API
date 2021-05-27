@@ -154,5 +154,9 @@ namespace Finance_Frontend_MVC.Controllers
         {
             return _context.TransactionDTO.Any(e => e.ID == id);
         }
+        public string getCategory(int id) {
+            string Category;
+            return "";
+        }
     }
 }
