@@ -9,6 +9,8 @@ namespace hwFinanceApp.Models
         [Display(Name = "Transaction #")]
         public long ID { get; set; } //primary key of transaction
         public int BankAccountID { get; set; } //BankAccount to which the transaction belongs.
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
         
         [Display(Name = "Transaction Date")]
